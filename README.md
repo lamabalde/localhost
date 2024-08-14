@@ -1,44 +1,30 @@
-Objectifs du Projet
+# localhost
 
-    Implémentation en Rust :
-        Utilisez Rust pour coder le serveur HTTP.
-        Vous pouvez utiliser des fonctions de la caisse libc pour des appels système comme epoll, mais évitez les caisses qui implémentent déjà des fonctionnalités de serveur comme tokio ou nix.
-        Vous devrez peut-être utiliser le mot-clé unsafe pour certaines opérations, mais avec prudence.
+_A single threaded HTTP server written in Rust as a part of the grit:lab curriculum._
+#### Authored by: [Mouhamadou Fadilou Diop](https://learn.zone01dakar.sn/git/mouhamadoufadiop/rt), [Daibou Ba](https://learn.zone01dakar.sn/git/daiba), [Ibrahima Diallo](https://learn.zone01dakar.sn/git/ediallo), [Mamadou Baldé](https://learn.zone01dakar.sn/git/mabalde),[Alimoudine IDRISSOU ](https://learn.zone01dakar.sn/git/ialimoud),[Ndiaga Ba](https://learn.zone01dakar.sn/git/nihiba), [Ousmane Ba](https://learn.zone01dakar.sn/git/ousmaneba0) and [Serigne Abdou Khadre Wade](https://learn.zone01dakar.sn/git/serwade)
+###### Completed during [grit:lab](https://gritlab.ax/) full-stack development course.
+#### Project Description: [here](https://github.com/01-edu/public/tree/master/subjects/localhost/README.md), [audit](https://github.com/01-edu/public/tree/master/subjects/localhost/audit)
 
-    Fonctionnalités du Serveur :
-        Stabilité : Le serveur ne doit jamais planter.
-        Gestion des délais d'attente : Les demandes doivent expirer si elles prennent trop de temps.
-        Multithreading : Le serveur doit pouvoir écouter sur plusieurs ports et gérer plusieurs instances simultanément avec un seul processus et un seul thread.
-        Conformité HTTP/1.1 : Le serveur doit respecter le protocole HTTP/1.1.
-        Méthodes HTTP : Le serveur doit supporter au moins les méthodes GET, POST, et DELETE.
-        Téléchargements de fichiers : Il doit pouvoir recevoir des fichiers envoyés par le client.
-        Gestion des cookies et des sessions : Implémentation de la gestion des cookies et des sessions.
-        Pages d'erreur : Créez des pages d'erreur personnalisées pour les codes d'erreur 400, 403, 404, 405, 413, et 500.
-        Epoll : Utilisez epoll ou une API équivalente pour chaque communication client/serveur, avec des opérations d'E/S non bloquantes.
-        Requêtes fragmentées et non fragmentées : Gérez les deux types de requêtes.
-        Statut des réponses : Définissez le bon statut pour chaque réponse.
 
-    CGI (Common Gateway Interface) :
-        Implémentez un CGI pour exécuter des fichiers selon leur extension (par exemple, .php ou .py).
-        Vous pouvez créer un nouveau processus pour exécuter le CGI.
-        Le CGI doit être appelé avec le fichier comme premier argument et EOF comme fin du corps.
-        Assurez-vous de gérer correctement les chemins relatifs.
+## Features
 
-    Fichier de Configuration :
-        Serveurs et Ports : Spécifiez l'hôte, les ports et les serveurs dans le fichier de configuration.
-        Pages d'erreur : Définissez les chemins pour les pages d’erreur personnalisées.
-        Taille des téléchargements : Limitez la taille des corps de client pour les téléchargements.
-        Routes : Configurez les routes avec les méthodes HTTP acceptées, redirections, répertoires/fichiers à rechercher, fichiers par défaut, CGI, et liste des répertoires.
-        Pas de commentaires : Les commentaires dans le fichier de configuration ne sont pas nécessaires.
+- Custom handlers
+- Standard handlers for `GET, HEAD, OPTIONS, TRACE, POST, PUT, DELETE & PATCH`
+- Support for chunked requests with the `Transfer-Encoding` header.
+- Support for `JavaScript, Python, PHP and Ruby` CGI. 
+- Sessions
+- Server logs
+- Dynamic default error page
 
-    Tests :
-        Tests de stress : Utilisez siege pour tester la disponibilité du serveur. Assurez-vous qu'il reste disponible avec un taux de disponibilité d'au moins 99,5%.
-        Tests exhaustifs : Créez des tests pour divers scénarios (redirections, erreurs de configuration, pages statiques et dynamiques, etc.).
-        Fuites de mémoire : Vérifiez les fuites de mémoire avant de soumettre le projet.
-        Préparation des tests : Vous pouvez utiliser n'importe quel langage pour écrire les tests, tant qu'ils sont exhaustifs et vérifiables.
+### Quick start guide
+1. Install Rust
+2. run `cargo run` in the root of this directory
 
-Points Clés pour la Mise en Œuvre
-
-    HTTP/1.1 Conformité : Assurez-vous que le serveur est totalement conforme aux spécifications du protocole HTTP/1.1.
-    Epoll et E/S Non Bloquantes : Utilisez epoll pour gérer les E/S de manière non bloquante afin de maintenir les performances du serveur.
-    Configuration Flexible : Le fichier de configuration doit permettre une gestion souple des routes, des méthodes HTTP, et des fichiers CGI.
+_The demo configuration will give you these following routes:_
+- `/api/update-cookie` - _Handler to update a cookie on the server_
+- `/api/get-cookie` - _Handler to get a cookie from the server_
+- `/api/cookie-demo` - _Dynamic session demo_
+- `/cgi` - _Demo path for implemented CGI_
+- `/files` - _Access anything you want in the /files directory. Highly recommend to remove this endpoint in production._
+- `/test.txt` - _Used for testing files on the server_
+- `/test-dir` - _Used for testing directories on the server_
